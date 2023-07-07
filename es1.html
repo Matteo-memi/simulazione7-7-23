@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet"  href="/es1.css">
+    </head>
+    <body>
+        <div id="elenco-studenti"></div>
+        <button onclick="ordinaStudenti('asc')">Ordina per migliore</button>
+        <button onclick="ordinaStudenti('desc')">Ordina per peggiore</button>
+    
+        <script>
+            let studentiJSON = '[{"id": 1, "fullname": "mario rossi", "avg": 6}, {"id": 2, "fullname": "luigi verdi", "avg": 4}, {"id": 3, "fullname": "peach pink", "avg": 8}, {"id": 4, "fullname": "wario rossi", "avg": 9}]';
+            let studenti = JSON.parse(studentiJSON);
+    
+            function creaElementoStudente(studente) {
+                let elementoStudente = document.createElement('div');
+                elementoStudente.className = 'studente';
+    
+                let idSpan = document.createElement('span');
+                idSpan.textContent = 'ID: ' + studente.id;
+    
+                let fullnameSpan = document.createElement('span');
+                fullnameSpan.textContent = 'Nome completo: ' + studente.fullname;
+    
+                let avgSpan = document.createElement('span');
+                avgSpan.textContent = 'Media: ' + studente.avg;
+    
+                elementoStudente.appendChild(idSpan);
+                elementoStudente.appendChild(document.createElement('br'));
+                elementoStudente.appendChild(fullnameSpan);
+                elementoStudente.appendChild(document.createElement('br'));
+                elementoStudente.appendChild(avgSpan);
+    
+                return elementoStudente;
+            }
+    
+            function mostraElencoStudenti(elencoStudenti) {
+                let elencoStudentiDiv = document.getElementById('elenco-studenti');
+                elencoStudentiDiv.innerHTML = '';
+    
+                for (let i = 0; i < elencoStudenti.length; i++) {
+                    let studente = elencoStudenti[i];
+                    let elementoStudente = creaElementoStudente(studente);
+                    elencoStudentiDiv.appendChild(elementoStudente);
+                }
+            }
+    
+            function ordinaStudenti(ordine) {
+                let studentiOrdinati = [];
+    
+                if (ordine === 'desc') {
+                    studentiOrdinati = studenti.sort(function(a, b) {
+                        return a.avg - b.avg;
+                    });
+                } else if (ordine === 'asc') {
+                    studentiOrdinati = studenti.sort(function(a, b) {
+                        return b.avg - a.avg;
+                    });
+                }
+    
+                mostraElencoStudenti(studentiOrdinati);
+            }
+    
+            mostraElencoStudenti(studenti);
+        </script>
+    </body>
+    </html>
+    
